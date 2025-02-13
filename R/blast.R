@@ -140,6 +140,15 @@ blast <- function(query_file,
         
         is_installed_blast(path = path)
         
+        # due to differences in path setting between windows and unix
+        if (.Platform$OS.type == "windows"){
+                path_export <- "set PATH=%PATH%;"
+                path_cmd_separator <- " & "
+        } else {
+                path_export <- "export PATH=$PATH:"
+                path_cmd_separator <- " ; "
+        }
+        
         if (is.null(path)) {
                 message("Running ",
                         system("blastp -version", intern = TRUE)[1],
@@ -147,8 +156,8 @@ blast <- function(query_file,
         } else {
                 message("Running ",
                         system(paste0(
-                                'export PATH=$PATH:',
-                                path, "' ; blastp -version '"), intern = TRUE)[1],
+                                path_export,
+                                path, path_cmd_separator, "blastp -version"), intern = TRUE)[1],
                         " ...")
         }
         
@@ -302,9 +311,10 @@ blast <- function(query_file,
                                                 # use the default parameters when running blastp
                                                 system(
                                                         paste0(
-                                                                'export PATH=$PATH:',
+                                                                path_export,
                                                                 path,
-                                                                '; blastp -db ',
+                                                                path_cmd_separator,
+                                                                'blastp -db ',
                                                                 database,
                                                                 ' -query ',
                                                                 input,
@@ -323,9 +333,10 @@ blast <- function(query_file,
                                                 # add additional parameters when running blastp
                                                 system(
                                                         paste0(
-                                                                'export PATH=$PATH:',
+                                                                path_export,
                                                                 path,
-                                                                '; blastp -db ',
+                                                                path_cmd_separator,
+                                                                'blastp -db ',
                                                                 database,
                                                                 ' -query ',
                                                                 input,

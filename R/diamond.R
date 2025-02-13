@@ -113,6 +113,15 @@ diamond <- function(
         
         is_installed_diamond(diamond_exec_path = path)
         
+        # due to differences in path setting between windows and unix
+        if (.Platform$OS.type == "windows"){
+                path_export <- "set PATH=%PATH%;"
+                path_cmd_separator <- " & "
+        } else {
+                path_export <- "export PATH=$PATH:"
+                path_cmd_separator <- " ; "
+        }
+        
         if (is.null(path)) {
                 message("Running ",
                         system("diamond --version", intern = TRUE)[1],
@@ -120,8 +129,8 @@ diamond <- function(
         } else {
                 message("Running ",
                         system(paste0(
-                                'export PATH=$PATH:',
-                                path, "' ; diamond --version '"), intern = TRUE)[1],
+                                path_export,
+                                path, path_cmd_separator, "diamond --version"), intern = TRUE)[1],
                         " ...")
         }
         
@@ -144,7 +153,7 @@ diamond <- function(
                         comp_cores = comp_cores
                 )[[1]]
                 
-                # make a BLASTable/DIAMONDable databse of the subject
+                # make a BLASTable/DIAMONDable database of the subject
                 database <- set_diamond(
                         file     = subject_file,
                         seq_type = seq_type,
@@ -257,9 +266,9 @@ diamond <- function(
         
         if(!is.null(path)){
                 diamond_run <- paste0(
-                        'export PATH=$PATH:',
+                        path_export,
                         path,
-                        '; ',
+                        path_cmd_separator,
                         diamond_run
                 )
         }

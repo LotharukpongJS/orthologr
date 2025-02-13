@@ -150,6 +150,15 @@ set_diamond <- function(
                                      open      = "w",
                                      file.out  = dbname )
                 
+                # due to differences in path setting between windows and unix
+                if (.Platform$OS.type == "windows"){
+                        path_export <- "set PATH=%PATH%;"
+                        path_cmd_separator <- " & "
+                } else {
+                        path_export <- "export PATH=$PATH:"
+                        path_cmd_separator <- " ; "
+                }
+                
                 # configuring the diamond makedb run in the command line
                 diamonddb_run <- paste0(
                         'diamond makedb', 
@@ -163,9 +172,9 @@ set_diamond <- function(
                 
                 if(!is.null(path)){
                         diamonddb_run <- paste0(
-                                "export PATH=$PATH:",
+                                path_export,
                                 path,
-                                "; ",
+                                path_cmd_separator,
                                 diamonddb_run
                         )
                 }

@@ -159,6 +159,15 @@ set_blast <- function(file,
                              open      = "w",
                              file.out  = dbname )
         
+        # due to differences in path setting between windows and unix
+        if (.Platform$OS.type == "windows"){
+                path_export <- "set PATH=%PATH%;"
+                path_cmd_separator <- " & "
+        } else {
+                path_export <- "export PATH=$PATH:"
+                path_cmd_separator <- " ; "
+        }
+        
         tryCatch({
                 
                 if(is.null(path)){
@@ -166,7 +175,7 @@ set_blast <- function(file,
                                " -input_type fasta -dbtype ",db_type," -hash_index"))
                         
                 } else {
-                        system(paste0("export PATH=",path,"; makeblastdb -in ",
+                        system(paste0(path_export,path,path_cmd_separator,"makeblastdb -in ",
                                dbname," -input_type fasta -dbtype ",db_type," -hash_index"))
                 }
                 

@@ -320,6 +320,14 @@ multi_aln <- function(file,
         #                 # clustalo - no param found to limit the output
         #         }
         
+        # due to differences in path setting between windows and unix
+        if (.Platform$OS.type == "windows"){
+                path_export <- "set PATH=%PATH%;"
+                path_cmd_separator <- " & "
+        } else {
+                path_export <- "export PATH=$PATH:"
+                path_cmd_separator <- " ; "
+        }
         
         # RIGHT NOW EACH NEW RUN OF THE FUNCTION OVERWRITES
         # THE EXISTING *.aln FILE
@@ -382,9 +390,9 @@ multi_aln <- function(file,
                                         # use the default parameters when running clustalw
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         call_clustalw,
                                                         " -infile=",
                                                         file,
@@ -397,9 +405,9 @@ multi_aln <- function(file,
                                         # add additional parameters when running clustalw
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         call_clustalw,
                                                         " -infile=",
                                                         file,
@@ -493,9 +501,9 @@ multi_aln <- function(file,
                                         # http://www.tcoffee.org/Projects/tcoffee/#DOCUMENTATION
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         "t_coffee -infile ",
                                                         file,
                                                         " -mode accurate",
@@ -507,9 +515,9 @@ multi_aln <- function(file,
                                         # add additional parameters when running t_coffee
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         "t_coffee -infile ",
                                                         file,
                                                         " ",
@@ -604,9 +612,9 @@ multi_aln <- function(file,
                                         # write output into clustalw format using the -clwstrict argument
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         "muscle -in ",
                                                         file,
                                                         " -out ",
@@ -621,9 +629,9 @@ multi_aln <- function(file,
                                         # write output into clustalw format using the -clwstrict argument
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         "muscle -in ",
                                                         file,
                                                         " ",
@@ -710,9 +718,9 @@ multi_aln <- function(file,
                                         # use the default parameters when running clustalo
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         "clustalo -i ",
                                                         file,
                                                         " -o ",
@@ -725,9 +733,9 @@ multi_aln <- function(file,
                                         # add additional parameters when running clustalo
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         "clustalo -i ",
                                                         file,
                                                         " -o ",
@@ -818,9 +826,9 @@ multi_aln <- function(file,
                                         # use the default parameters when running mafft
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         "mafft --quiet --anysymbol --clustalout ",
                                                         file,
                                                         " >",
@@ -831,9 +839,9 @@ multi_aln <- function(file,
                                         # add additional parameters when running mafft
                                         system(
                                                 paste0(
-                                                        "export PATH=$PATH:",
+                                                        path_export,
                                                         path,
-                                                        "; ",
+                                                        path_cmd_separator,
                                                         "mafft",
                                                         " ",
                                                         params,

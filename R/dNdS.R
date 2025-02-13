@@ -235,7 +235,7 @@ dNdS <- function(query_file,
                  ){
         
         message("\n")
-        message("Starting orthology inference (",ortho_detection, ") and dNdS estimation (",dnds_est.method,") using the follwing parameters:")
+        message("Starting orthology inference (",ortho_detection, ") and dNdS estimation (",dnds_est.method,") using the following parameters:")
         message("query = '", basename(query_file), "'")
         message("subject = '", basename(subject_file), "'")
         message("aligner = ", "'", basename(aligner), "'")
