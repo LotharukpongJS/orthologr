@@ -1,3 +1,9 @@
+## `orthologr` version 0.4.3
+
+### Fixes
+
+- resolved issues with windows OS compatibility
+
 ## `orthologr` version 0.4.2
 
 ### New Function
