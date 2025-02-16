@@ -140,25 +140,24 @@ blast <- function(query_file,
         
         is_installed_blast(path = path)
         
-        # due to differences in path setting between windows and unix
-        if (.Platform$OS.type == "windows"){
-                path_export <- "set PATH=%PATH%;"
-                path_cmd_separator <- " & "
-        } else {
-                path_export <- "export PATH=$PATH:"
-                path_cmd_separator <- " ; "
-        }
-        
         if (is.null(path)) {
                 message("Running ",
                         system("blastp -version", intern = TRUE)[1],
                         " ...")
         } else {
+                # due to differences in path setting between windows and unix
+                # in case the user doesn't put \\ or / at the end of path.
+                if (.Platform$OS.type == "windows"){
+                        path_dir <- paste0(path, "\\")
+                } else {
+                        path_dir <- paste0(path, "/")
+                }
+                
                 message("Running ",
                         system(paste0(
-                                path_export,
-                                path, path_cmd_separator, "blastp -version"), intern = TRUE)[1],
+                                path_dir, "blastp -version"), intern = TRUE)[1],
                         " ...")
+                message("where the path to blast is set by user to ", path)
         }
         
         # due to the discussion of no visible binding for global variable for
@@ -311,9 +310,7 @@ blast <- function(query_file,
                                                 # use the default parameters when running blastp
                                                 system(
                                                         paste0(
-                                                                path_export,
-                                                                path,
-                                                                path_cmd_separator,
+                                                                path_dir,
                                                                 'blastp -db ',
                                                                 database,
                                                                 ' -query ',
@@ -333,9 +330,7 @@ blast <- function(query_file,
                                                 # add additional parameters when running blastp
                                                 system(
                                                         paste0(
-                                                                path_export,
-                                                                path,
-                                                                path_cmd_separator,
+                                                                path_dir,
                                                                 'blastp -db ',
                                                                 database,
                                                                 ' -query ',

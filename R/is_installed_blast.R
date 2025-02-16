@@ -1,25 +1,21 @@
 is_installed_blast <- function(path = NULL) {
         
-        # due to differences in path setting between windows and unix
-        if (.Platform$OS.type == "windows"){
-                path_export <- "set PATH=%PATH%;"
-                path_cmd_separator <- " & "
-        } else {
-                path_export <- "export PATH=$PATH:"
-                path_cmd_separator <- " ; "
-        }
-        
         # test if a valid BLAST version is installed
         tryCatch({
                 if (is.null(path)) {
                         sys_out <-
                                 system("blastp -version", intern = TRUE)
                 } else {
+                        # due to differences in path setting between windows and unix
+                        # in case the user doesn't put \\ or / at the end of path.
+                        if (.Platform$OS.type == "windows"){
+                                path_dir <- paste0(path, "\\")
+                        } else {
+                                path_dir <- paste0(path, "/")
+                        }
                         sys_out <-
                                 system(paste0(
-                                        path_export,
-                                        path,
-                                        path_cmd_separator,
+                                        path_dir,
                                         "blastp -version"), intern = TRUE)
                 }
                 

@@ -111,27 +111,26 @@ diamond <- function(
         if (!is.element(database_maker, c("diamond", "blast")))
                 stop("Please choose either: 'diamond' or 'blast' as database_maker.", call. = FALSE)
         
-        is_installed_diamond(diamond_exec_path = path)
-        
-        # due to differences in path setting between windows and unix
-        if (.Platform$OS.type == "windows"){
-                path_export <- "set PATH=%PATH%;"
-                path_cmd_separator <- " & "
-        } else {
-                path_export <- "export PATH=$PATH:"
-                path_cmd_separator <- " ; "
-        }
+        is_installed_diamond(path = path)
         
         if (is.null(path)) {
                 message("Running ",
                         system("diamond --version", intern = TRUE)[1],
                         " ...")
         } else {
+                # due to differences in path setting between windows and unix
+                # in case the user doesn't put \\ or / at the end of path.
+                if (.Platform$OS.type == "windows"){
+                        path_dir <- paste0(path, "\\")
+                } else {
+                        path_dir <- paste0(path, "/")
+                }
+                
                 message("Running ",
                         system(paste0(
-                                path_export,
-                                path, path_cmd_separator, "diamond --version"), intern = TRUE)[1],
+                                path_dir, "diamond --version"), intern = TRUE)[1],
                         " ...")
+                message("where the path to diamond is set by user to ", path)
         }
         
         message("sensitivity mode: ", sensitivity_mode)
@@ -196,7 +195,7 @@ diamond <- function(
         
         
         # create an internal folder structure for the DIAMOND process
-        # we create a BLAST database
+        # we create a BLAST/DIAMOND database
         input = paste0("query_", filename, ".fasta")
         # input = "blastinput.fasta"
         output = paste0("blastresult_", filename, ".csv")
@@ -266,9 +265,7 @@ diamond <- function(
         
         if(!is.null(path)){
                 diamond_run <- paste0(
-                        path_export,
-                        path,
-                        path_cmd_separator,
+                        path_dir,
                         diamond_run
                 )
         }
