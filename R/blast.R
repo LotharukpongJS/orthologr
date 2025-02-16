@@ -298,7 +298,7 @@ blast <- function(query_file,
                                                                 comp_cores,
                                                                 ' ',
                                                                 blast_params,
-                                                                ' -outfmt 6"',' qseqid sseqid pident nident length mismatch gapopen gaps positive ppos qstart qend qlen qcovs qcovhsp sstart send slen evalue bitscore score"'
+                                                                ' -outfmt "6',' qseqid sseqid pident nident length mismatch gapopen gaps positive ppos qstart qend qlen qcovs qcovhsp sstart send slen evalue bitscore score"'
                                                         )
                                                 )
                                                 
@@ -326,7 +326,7 @@ blast <- function(query_file,
                                                                 output ,
                                                                 ' -num_threads ',
                                                                 comp_cores,
-                                                                ' -outfmt 6"',' qseqid sseqid pident nident length mismatch gapopen gaps positive ppos qstart qend qlen qcovs qcovhsp sstart send slen evalue bitscore score"'
+                                                                ' -outfmt "6',' qseqid sseqid pident nident length mismatch gapopen gaps positive ppos qstart qend qlen qcovs qcovhsp sstart send slen evalue bitscore score"'
                                                         )
                                                 )
                                         } else {
@@ -350,7 +350,7 @@ blast <- function(query_file,
                                                                 comp_cores,
                                                                 ' ',
                                                                 blast_params,
-                                                                ' -outfmt 6"',' qseqid sseqid pident nident length mismatch gapopen gaps positive ppos qstart qend qlen qcovs qcovhsp sstart send slen evalue bitscore score"'
+                                                                ' -outfmt "6',' qseqid sseqid pident nident length mismatch gapopen gaps positive ppos qstart qend qlen qcovs qcovhsp sstart send slen evalue bitscore score"'
                                                         )
                                                 )
                                         }
