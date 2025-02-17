@@ -72,9 +72,6 @@ install.packages(c("doParallel", "foreach", "ape", "Rdpack", "benchmarkme", "dev
 # install BLAST dependency metablastr from GitHub
 devtools::install_github("drostlab/metablastr")
 
-# install DIAMOND dependency rdiamond from GitHub
-devtools::install_github("drostlab/rdiamond")
-
 # install orthologr from GitHub
 devtools::install_github("drostlab/orthologr")
 ```
@@ -209,12 +206,17 @@ library("orthologr", lib.loc = "C:/Program Files/R/R-3.1.1/library")
 
 ## Interfaces implemented in `orthologr`:
 
-### Perform BLAST searches with R  
+### Perform BLAST searches with R
 
 * `blast()`: Perform a BLAST+ search
 * `blast_best()`: Perform a BLAST+ best hit search
 * `blast_rec()`: Perform a BLAST+ best reciprocal hit (BRH) search
 
+### Perform DIAMONDv2 searches with R
+
+* `diamond()`: Perform a DIAMOND search
+* `diamond_best()`: Perform a DIAMOND best hit search
+* `diamond_rec()`: Perform a DIAMOND best reciprocal hit (BRH) search
 
 ### Perform Pairwise and Multiple Sequence Alignements with R
 
