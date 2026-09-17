@@ -49,6 +49,9 @@ orthofinder2 <-
                  comp_cores = 1,
                  orthogroup_only = TRUE,
                  of_path = NULL) {
+                if (!is.null(of_path))
+                        of_path <- normalizePath(of_path, mustWork = FALSE)
+                
                 is_installed_orthofinder(path = of_path)
                 
                 if (!is.null(import_type)) {

@@ -135,6 +135,9 @@ deepclust <- function(
                         call. = FALSE
                 )
 
+        if (!is.null(path))
+                path <- normalizePath(path, mustWork = FALSE)
+        
         is_installed_diamond(diamond_exec_path = path)
 
         if (is.null(path)) {
